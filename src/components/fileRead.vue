@@ -1,13 +1,42 @@
 <template>
   <v-container>
-       <p>hola</p>
+       <p>Introduzca el fichero</p>
         <div id="readfile">
         <input v-on:click="readFile" type="file" name="inputfile" id="inputfile">
         <pre id="output"></pre>
     </div>
 
     <div>
-        Métrica a elegir
+        <p>Métrica</p>
+      <v-row align="center">
+ 
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-select :items="items" label="Seleccione la métrica" dense solo v-model="metric" v-on:change = "selectMetrics"></v-select>
+        </v-col>
+      </v-row>
+    </div>
+
+    <div>
+      <p>Número de vecinos considerado</p>
+
+        <v-col
+          cols="12"
+          sm="6"
+          md="3"
+        >
+          <v-text-field
+            label="Solo"
+            dense
+            solo
+            v-on:change = "getNeighbors"
+            v-model = neighbor
+          ></v-text-field>
+        </v-col>
+
+    </div>
+
+    <div>
+      <p>Tipo de predicción</p>
     </div>
   </v-container>
 </template>
@@ -16,11 +45,12 @@
   export default {
 
 
-       data() {
-        return {
-            message: 'Hola'
-        }
-    },
+      data: () => ({
+        items: ['Correlación de Pearson', 'Distancia coseno', 'Distancia Euclídea'],
+        metric: null,
+        neighbor: null
+    }),
+    
     methods: {
         // readFile() {
         //     // var file = new File([""],"../../public/files/file1.txt");
@@ -58,7 +88,11 @@
             })
         },
         selectMetrics() {
-            
+             console.log(this.metric);
+          
+        },
+        getNeighbors() {
+          console.log(this.neighbor);
         }
     }
 }
