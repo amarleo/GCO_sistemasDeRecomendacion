@@ -11,7 +11,7 @@
       <v-row align="center">
  
         <v-col class="d-flex" cols="12" sm="6">
-          <v-select :items="items" label="Seleccione la métrica" dense solo v-model="metric" v-on:change = "selectMetrics"></v-select>
+          <v-select :items="itemsMetric" label="Seleccione la métrica" dense solo v-model="metric" v-on:change = "selectMetrics"></v-select>
         </v-col>
       </v-row>
     </div>
@@ -37,6 +37,11 @@
 
     <div>
       <p>Tipo de predicción</p>
+      <v-row align="center">
+        <v-col class="d-flex" cols="12" sm="6">
+          <v-select :items="itemsPrediction" label="Seleccione la predicción" dense solo v-model="prediction" v-on:change = "selectPrediction"></v-select>
+        </v-col>
+      </v-row>
     </div>
   </v-container>
 </template>
@@ -46,9 +51,11 @@
 
 
       data: () => ({
-        items: ['Correlación de Pearson', 'Distancia coseno', 'Distancia Euclídea'],
+        itemsMetric: ['Correlación de Pearson', 'Distancia coseno', 'Distancia Euclídea'],
+        itemsPrediction: ['Predicción Simple', 'Diferencia con la media'],
         metric: null,
-        neighbor: null
+        neighbor: null,
+        prediction: null,
     }),
     
     methods: {
@@ -80,15 +87,17 @@
                             console.log((matrix_content.length / lines.length).toFixed());
                         }
                     }
-                    
                     console.log(matrix);
-                    
                 }
                 reader.readAsText(this.files[0]);
             })
         },
         selectMetrics() {
              console.log(this.metric);
+          
+        },
+        selectPrediction() {
+             console.log(this.prediction);
           
         },
         getNeighbors() {
